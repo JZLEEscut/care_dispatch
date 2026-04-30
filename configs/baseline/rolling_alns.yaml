@@ -1,0 +1,6 @@
+rolling_alns:
+  iterations: 100
+  time_limit_seconds: 2
+  lookahead_tasks: 10
+  destroy_ratio: 0.25
+  fallback: pure_heuristic

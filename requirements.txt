@@ -1,0 +1,11 @@
+numpy
+pandas
+scipy
+matplotlib
+pyyaml
+tqdm
+gymnasium
+torch
+# torch-geometric may need a CUDA/CPU-specific installation command.
+ortools
+pytest

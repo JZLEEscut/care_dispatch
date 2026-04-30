@@ -1,0 +1,6 @@
+base_env_config: configs/env/rc101_default.yaml
+gat_config: configs/model/gat_ppo.yaml
+mlp_config: configs/model/mlp_ppo.yaml
+seeds: [0, 1, 2]
+eval_episodes: 20
+train_if_no_checkpoint: true

@@ -1,0 +1,52 @@
+base_env_config: configs/env/rc101_default.yaml
+
+train_source:
+  solomon_file: data/solomon/RC101.txt
+
+zero_shot_test_sets:
+  - id: RC101_in_distribution
+    solomon_file: data/solomon/RC101.txt
+  - id: C101_clustered
+    solomon_file: data/solomon/C101.txt
+  - id: R101_random
+    solomon_file: data/solomon/R101.txt
+
+methods:
+  - pure_heuristic
+  - mlp_ppo
+  - gat_ppo
+
+model_configs:
+  gat_ppo: configs/model/gat_ppo.yaml
+  mlp_ppo: configs/model/mlp_ppo.yaml
+
+checkpoints:
+  gat_ppo: outputs/checkpoints/gat_ppo_seed{seed}.pt
+  mlp_ppo: outputs/checkpoints/mlp_ppo_seed{seed}.pt
+
+seeds: [0, 1, 2, 3, 4]
+eval_episodes: 50
+train_if_no_checkpoint: true
+
+common_env:
+  data:
+    num_tasks: 50
+    num_workers: 8
+  dynamic_arrival:
+    enabled: true
+    mode: uniform
+    dynamic_ratio: 0.20
+    emergency_ratio: 0.20
+  action_mask:
+    enabled: true
+    feasibility_check: true
+  preemption:
+    enabled: true
+
+outputs:
+  raw: outputs/raw_results/zero_shot_spatial_raw.csv
+  table: outputs/tables/zero_shot_spatial_summary.csv
+  degradation: outputs/tables/zero_shot_degradation.csv
+  figure_cost: outputs/figures/zero_shot_total_cost_by_topology.png
+  figure_response: outputs/figures/zero_shot_emergency_response_by_topology.png
+  figure_degradation: outputs/figures/zero_shot_degradation_ratio.png

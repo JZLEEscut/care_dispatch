@@ -1,0 +1,26 @@
+model_type: gat
+checkpoint_prefix: gat_ppo_nomask
+hidden_dim: 128
+gat_heads: 4
+gat_layers: 2
+reject_init_bias: -3.0
+
+action_mask:
+  enabled: false
+
+preemption:
+  enabled: true
+
+ppo:
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_epsilon: 0.2
+  entropy_coef: 0.01
+  value_coef: 0.5
+  learning_rate: 0.0003
+  max_grad_norm: 0.5
+  rollout_steps: 1024
+  update_epochs: 4
+  minibatch_size: 256
+  total_timesteps: 200000
+  reward_scale: 0.002

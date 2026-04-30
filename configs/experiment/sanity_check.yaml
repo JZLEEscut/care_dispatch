@@ -1,0 +1,15 @@
+base_env_config: configs/env/rc101_default.yaml
+solver: ortools
+instances:
+  - id: S-10
+    num_tasks: 10
+    num_workers: 3
+  - id: S-15
+    num_tasks: 15
+    num_workers: 4
+  - id: S-20
+    num_tasks: 20
+    num_workers: 5
+seeds: [0, 1, 2]
+dynamic_arrival: false
+preemption_enabled: false

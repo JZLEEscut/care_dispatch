@@ -1,0 +1,34 @@
+data:
+  solomon_file: data/solomon/RC101.txt
+  num_tasks: 50
+  num_workers: 8
+  allow_synthetic_if_missing: false
+
+time:
+  day_start: 0
+  day_end: 480
+  max_steps_per_episode: 200
+
+dynamic_arrival:
+  enabled: true
+  mode: uniform
+  dynamic_ratio: 0.20
+  emergency_ratio: 0.20
+
+skills:
+  task_skill_distribution: [0.50, 0.35, 0.15]
+  worker_skill_distribution: [0.40, 0.40, 0.20]
+
+cost:
+  distance_weight: 1.0
+  lambda_tardiness_regular: 2.0
+  lambda_tardiness_emergency: 6.0
+  mu_preemption: 30.0
+  reject_penalty_regular: 500.0
+  reject_penalty_emergency: 1500.0
+
+preemption:
+  enabled: true
+
+action_mask:
+  feasibility_check: true

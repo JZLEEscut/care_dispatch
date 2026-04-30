@@ -1,0 +1,5 @@
+Metadata-Version: 2.4
+Name: care-dispatch
+Version: 0.1.0
+Summary: Dynamic care dispatch simulation and PPO training project
+Requires-Python: >=3.10

@@ -1,0 +1,63 @@
+base_env_config: configs/env/rc101_default.yaml
+
+variants:
+  - full_gat
+  - gat_nomask
+  - gat_nopreempt
+
+model_configs:
+  full_gat: configs/model/gat_ppo.yaml
+  gat_nomask: configs/model/gat_ppo_nomask.yaml
+  gat_nopreempt: configs/model/gat_ppo_nopreempt.yaml
+
+optional_existing_results:
+  include_gat_vs_mlp: true
+  gat_vs_mlp_csv: outputs/tables/gat_vs_mlp_results.csv
+
+checkpoints:
+  full_gat: outputs/checkpoints/gat_ppo_seed{seed}.pt
+  gat_nomask: outputs/checkpoints/gat_ppo_nomask_seed{seed}.pt
+  gat_nopreempt: outputs/checkpoints/gat_ppo_nopreempt_seed{seed}.pt
+
+train_if_no_checkpoint: true
+seeds: [0, 1, 2, 3, 4]
+eval_episodes: 50
+
+common_env:
+  data:
+    solomon_file: data/solomon/RC101.txt
+    num_tasks: 50
+    num_workers: 8
+  dynamic_arrival:
+    enabled: true
+    mode: uniform
+    dynamic_ratio: 0.20
+    emergency_ratio: 0.20
+
+variant_overrides:
+  full_gat:
+    action_mask:
+      enabled: true
+      feasibility_check: true
+    preemption:
+      enabled: true
+  gat_nomask:
+    action_mask:
+      enabled: false
+      feasibility_check: true
+    preemption:
+      enabled: true
+  gat_nopreempt:
+    action_mask:
+      enabled: true
+      feasibility_check: true
+    preemption:
+      enabled: false
+
+outputs:
+  raw: outputs/raw_results/remaining_ablation_raw.csv
+  table: outputs/tables/remaining_ablation_summary.csv
+  figure_total_cost: outputs/figures/ablation_total_cost.png
+  figure_illegal: outputs/figures/ablation_illegal_action_rate.png
+  figure_preemption_response: outputs/figures/ablation_preemption_response.png
+  figure_tardiness: outputs/figures/ablation_tardiness.png

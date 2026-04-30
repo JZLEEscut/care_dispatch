@@ -1,0 +1,5 @@
+rolling_ortools:
+  enabled: true
+  time_limit_seconds: 2
+  lookahead_tasks: 8
+  fallback: pure_heuristic

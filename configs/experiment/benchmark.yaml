@@ -1,0 +1,57 @@
+base_env_config: configs/env/rc101_default.yaml
+
+methods:
+  - pure_heuristic
+  - rolling_ortools
+  - rolling_alns
+  - mlp_ppo
+  - gat_ppo
+
+model_configs:
+  gat_ppo: configs/model/gat_ppo.yaml
+  mlp_ppo: configs/model/mlp_ppo.yaml
+
+checkpoints:
+  gat_ppo: outputs/checkpoints/gat_ppo_seed{seed}.pt
+  mlp_ppo: outputs/checkpoints/mlp_ppo_seed{seed}.pt
+
+seeds: [0, 1, 2, 3, 4]
+eval_episodes: 50
+train_if_no_checkpoint: true
+
+benchmark_env:
+  data:
+    solomon_file: data/solomon/RC101.txt
+    num_tasks: 50
+    num_workers: 8
+  dynamic_arrival:
+    enabled: true
+    mode: uniform
+    dynamic_ratio: 0.20
+    emergency_ratio: 0.20
+  preemption:
+    enabled: true
+  action_mask:
+    enabled: true
+    feasibility_check: true
+
+rolling_ortools:
+  time_limit_seconds: 2
+  lookahead_tasks: 8
+  fallback: pure_heuristic
+
+rolling_alns:
+  iterations: 100
+  time_limit_seconds: 2
+  lookahead_tasks: 10
+  destroy_ratio: 0.25
+  fallback: pure_heuristic
+
+outputs:
+  raw: outputs/raw_results/benchmark_raw.csv
+  table: outputs/tables/benchmark_summary.csv
+  wilcoxon: outputs/tables/benchmark_wilcoxon.csv
+  figure_cost: outputs/figures/benchmark_total_cost.png
+  figure_response: outputs/figures/benchmark_emergency_response.png
+  figure_reject: outputs/figures/benchmark_reject_rate.png
+  figure_decision_time: outputs/figures/benchmark_decision_time.png
